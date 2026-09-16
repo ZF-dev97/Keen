@@ -1,0 +1,25 @@
+{
+  "literacy": {
+    "prompt": "Which word means the opposite of 'frugal'?",
+    "options": ["Thrifty", "Lavish", "Modest", "Sparing"],
+    "correctIndex": 1,
+    "explanation": "'Lavish' means spending or giving generously — the opposite of frugal."
+  },
+  "verbal": {
+    "prompt": "Which word does not belong with the others?",
+    "options": ["Trumpet", "Violin", "Drum", "Painting"],
+    "correctIndex": 3,
+    "explanation": "Painting is a visual art — the others are all musical instruments."
+  },
+  "critical": {
+    "prompt": "\"Every athlete on the team trains daily, so anyone who trains daily must be an athlete on the team.\" What's the flaw in this reasoning?",
+    "options": [
+      "It assumes the reverse of a true statement is also true",
+      "It uses a word with two different meanings",
+      "It relies on an unnamed expert",
+      "It attacks the person instead of the argument"
+    ],
+    "correctIndex": 0,
+    "explanation": "\"All A are B\" doesn't mean \"all B are A\" — plenty of people who train daily aren't on the team."
+  }
+}
