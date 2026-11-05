@@ -1,46 +1,54 @@
 # Keen daily refresh — scheduled task prompt
 
-This is the instruction a scheduled Claude session follows each morning to
-generate that day's literacy, verbal reasoning and critical thinking
-questions. Numeracy needs no refresh — it's generated in the browser from
-the date (see `numeracy.js`).
+This is the instruction to follow (or to give a scheduled Claude session)
+each time to generate that day's literacy, verbal reasoning and critical
+thinking questions. Numeracy needs no refresh — it generates 5 harder
+equations in the browser from the date (see `numeracy.js`).
 
-No API key, no separate billing: this runs as a normal Claude session
-inside your repo, using your own git access to commit the result.
+Difficulty note: Keen's content runs hard from the start — no easing in,
+similar to how NUMBLE was recalibrated after its first playtest. Don't
+write a "warm-up" question and then a "hard" one; every question should
+be a genuine couple of minutes' thought.
 
-## The task, each morning
+## The task, each time
 
 1. Work out today's date in `YYYY-MM-DD` form.
-2. Read `daily-refresh/recent-log.json` — the last ~14 days of questions
-   already used, kept so today's set doesn't repeat one of them.
-3. Generate exactly one question for each of `literacy`, `verbal`,
-   `critical`, matching the shape in `daily-refresh/schema.json`:
+2. Read `daily-refresh/recent-log.json` — recent days' questions already
+   used, so today's set doesn't repeat one of them.
+3. Generate exactly **5** questions for each of `literacy`, `verbal`,
+   `critical` (15 total), matching the shape in `daily-refresh/schema.json`:
    - `prompt` — the question text.
    - `options` — exactly 4 answer choices, all distinct.
    - `correctIndex` — 0–3, which option is correct.
-   - `explanation` — one sentence, shown after answering, explaining why
-     the correct option is correct.
+   - `explanation` — one or two sentences, shown after answering, explaining
+     why the correct option is correct.
 
-   Category guidance:
-   - **literacy** — vocabulary, word origins, grammar, or reading
-     comprehension. Roughly GCSE-to-adult difficulty.
-   - **verbal** — analogies, odd-one-out, word relationships.
+   Category guidance (aim GCSE-to-adult and above — genuinely tricky, not
+   a warm-up):
+   - **literacy** — vocabulary, etymology/word roots, grammar, or usage.
+     Favour less common words over everyday ones ('ephemeral', not 'happy').
+   - **verbal** — analogies (A is to B as C is to ?) and odd-one-out, where
+     the shared relationship isn't immediately obvious.
    - **critical** — a short argument or scenario with a reasoning flaw to
-     spot, or a short logic puzzle.
+     spot (slippery slope, false dilemma, ad hominem, hasty generalisation,
+     correlation-vs-causation, appeal to popularity, and similar — vary
+     which one shows up rather than reusing the same flaw every day), or a
+     short logic puzzle.
 
-   Keep each solvable in a couple of minutes without external references.
+   Each should still be solvable in a couple of minutes without external
+   references — hard, not obscure trivia.
 4. Validate what was generated against `daily-refresh/schema.json` before
-   writing anything. If a question doesn't fit (wrong option count,
-   duplicate options, correctIndex out of range), regenerate that one
-   question rather than the whole set.
+   writing anything — each category must be an array of exactly 5
+   questions. If one doesn't fit (wrong option count, duplicate options,
+   correctIndex out of range), regenerate that one question.
 5. Check each new question against `daily-refresh/recent-log.json` for
-   near-duplicates (same core question or answer set). Regenerate any
-   that repeat.
+   near-duplicates (same core question, answer, or fallacy type repeated
+   within the last ~2 weeks). Regenerate any that repeat too closely.
 6. Write the result to `exercises/<today>.json` (see `fallback.json` for
-   the exact shape — same three keys, no wrapping "date" field needed
-   since the filename carries the date).
-7. Append today's three questions to `daily-refresh/recent-log.json`,
-   trimmed to the last 14 days.
+   the exact shape — same three keys, each an array of 5).
+7. Append today's three question sets to `daily-refresh/recent-log.json`
+   (a short summary per question is enough — see the existing entries),
+   trimmed to roughly the last 14 days.
 8. Commit and push:
    ```
    git add exercises/<today>.json daily-refresh/recent-log.json
@@ -52,9 +60,11 @@ inside your repo, using your own git access to commit the result.
 
 ## Setting this up as a real scheduled task
 
-Once the repo exists on GitHub, create a scheduled task (not a local cron
-job — those don't survive between sessions) that fires once a day, early
-morning, with this file's contents as its prompt, pointed at the repo's
-working copy. Ask Claude to set this up for you when you're ready —
-it needs to know the repo's location on disk (or to clone it fresh each
-run) and confirm git is authenticated to push.
+As covered when this was last discussed: the cloud environment this
+assistant runs in can't push to the repo directly (GitHub access isn't
+authorised for it), so for now this refresh is run on request rather than
+on an automatic schedule — ask, and a new `exercises/<date>.json` and
+updated `recent-log.json` get generated for you to drop in and push
+yourself, the same way as always. Revisit automatic scheduling later if
+it's worth the laptop-must-be-on tradeoff (or the small ongoing cost of
+running it through GitHub Actions instead).

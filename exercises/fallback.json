@@ -1,25 +1,128 @@
 {
-  "literacy": {
-    "prompt": "Which word means the opposite of 'frugal'?",
-    "options": ["Thrifty", "Lavish", "Modest", "Sparing"],
-    "correctIndex": 1,
-    "explanation": "'Lavish' means spending or giving generously — the opposite of frugal."
-  },
-  "verbal": {
-    "prompt": "Which word does not belong with the others?",
-    "options": ["Trumpet", "Violin", "Drum", "Painting"],
-    "correctIndex": 3,
-    "explanation": "Painting is a visual art — the others are all musical instruments."
-  },
-  "critical": {
-    "prompt": "\"Every athlete on the team trains daily, so anyone who trains daily must be an athlete on the team.\" What's the flaw in this reasoning?",
-    "options": [
-      "It assumes the reverse of a true statement is also true",
-      "It uses a word with two different meanings",
-      "It relies on an unnamed expert",
-      "It attacks the person instead of the argument"
-    ],
-    "correctIndex": 0,
-    "explanation": "\"All A are B\" doesn't mean \"all B are A\" — plenty of people who train daily aren't on the team."
-  }
+  "literacy": [
+    {
+      "prompt": "Which word is closest in meaning to 'ephemeral'?",
+      "options": ["Everlasting", "Fleeting", "Enormous", "Hidden"],
+      "correctIndex": 1,
+      "explanation": "'Ephemeral' means lasting for a very short time — 'fleeting' is the closest match."
+    },
+    {
+      "prompt": "The word 'benevolent' comes from the Latin 'bene' (well) and 'volens' (wishing). What does 'benevolent' mean?",
+      "options": ["Well-informed", "Kind and well-meaning", "Quick to act", "Financially generous"],
+      "correctIndex": 1,
+      "explanation": "'Benevolent' literally means 'wishing well' — kind and well-meaning, not specifically about money or speed."
+    },
+    {
+      "prompt": "Which word means the opposite of 'laconic'?",
+      "options": ["Talkative", "Brief", "Calm", "Blunt"],
+      "correctIndex": 0,
+      "explanation": "'Laconic' means using very few words — its opposite here is 'talkative'."
+    },
+    {
+      "prompt": "What does the prefix 'omni-' mean, as in 'omniscient' or 'omnipotent'?",
+      "options": ["All", "None", "Above", "Within"],
+      "correctIndex": 0,
+      "explanation": "'Omni-' is Latin for 'all' — omniscient means all-knowing, omnipotent means all-powerful."
+    },
+    {
+      "prompt": "Which sentence uses 'infer' correctly?",
+      "options": [
+        "The speaker inferred that we should leave early",
+        "From her tone, I inferred that she was upset",
+        "He inferred the rules to the new players",
+        "The report inferred three new regulations"
+      ],
+      "correctIndex": 1,
+      "explanation": "'Infer' means to conclude something from evidence — the listener infers, the speaker implies. Only the second sentence uses it correctly."
+    }
+  ],
+  "verbal": [
+    {
+      "prompt": "Which word does not belong with the others?",
+      "options": ["Pensive", "Jubilant", "Euphoric", "Elated"],
+      "correctIndex": 0,
+      "explanation": "'Pensive' means thoughtful or reflective — the other three all describe intense happiness."
+    },
+    {
+      "prompt": "BOOK is to LIBRARY as PAINTING is to:",
+      "options": ["Easel", "Canvas", "Gallery", "Artist"],
+      "correctIndex": 2,
+      "explanation": "A library is a place that houses many books; a gallery is a place that houses many paintings — the same relationship."
+    },
+    {
+      "prompt": "Which word does not belong with the others?",
+      "options": ["Myopic", "Astute", "Shrewd", "Perceptive"],
+      "correctIndex": 0,
+      "explanation": "'Myopic' means short-sighted or lacking foresight — the other three all describe sharp judgement."
+    },
+    {
+      "prompt": "CANDID is to DECEPTIVE as GENEROUS is to:",
+      "options": ["Charitable", "Miserly", "Wealthy", "Kind"],
+      "correctIndex": 1,
+      "explanation": "Candid and deceptive are opposites; generous and miserly are opposites — the same relationship."
+    },
+    {
+      "prompt": "Which word does not belong with the others?",
+      "options": ["Meticulous", "Haphazard", "Scrupulous", "Methodical"],
+      "correctIndex": 1,
+      "explanation": "'Haphazard' means disorganised or random — the other three all describe careful, orderly attention to detail."
+    }
+  ],
+  "critical": [
+    {
+      "prompt": "\"If we allow students to redo one failed test, soon they'll expect to redo every assignment, and standards will collapse entirely.\" What's the flaw in this reasoning?",
+      "options": [
+        "It assumes a small change will inevitably lead to an extreme outcome, without justifying the chain of events",
+        "It relies on an irrelevant personal attack",
+        "It confuses a correlation with a cause",
+        "It appeals to how many people already believe this"
+      ],
+      "correctIndex": 0,
+      "explanation": "This is a 'slippery slope' argument — it assumes one step leads inevitably to an extreme result without showing why each step would actually follow."
+    },
+    {
+      "prompt": "\"You can't trust Dr. Patel's opinion on the new policy — she's not even an economist.\" Her actual argument was about the policy's effect on public health. What's the flaw here?",
+      "options": [
+        "It dismisses the argument based on the person's credentials rather than addressing what they actually said",
+        "It assumes the policy is popular, so it must be correct",
+        "It mistakes a one-off event for a general pattern",
+        "It uses a vague term that could mean several things"
+      ],
+      "correctIndex": 0,
+      "explanation": "This is an 'ad hominem' — attacking who is making the argument instead of engaging with it, especially since her actual point was about health, not economics."
+    },
+    {
+      "prompt": "\"Either we cut the budget completely, or the whole project fails.\" What's the flaw in this statement?",
+      "options": [
+        "It presents only two options when other possibilities likely exist",
+        "It relies on a sample that's too small to generalise from",
+        "It assumes what it's trying to prove",
+        "It uses emotionally loaded language instead of evidence"
+      ],
+      "correctIndex": 0,
+      "explanation": "This is a 'false dilemma' — it presents two extreme options as the only possibilities, ignoring middle-ground solutions like a partial cut."
+    },
+    {
+      "prompt": "\"This herbal remedy must work — my uncle took it and his cold went away after a week.\" What's the flaw in this reasoning?",
+      "options": [
+        "It treats one personal anecdote as strong evidence, ignoring that colds usually clear up on their own in about that time",
+        "It assumes the remedy is expensive, so it must be effective",
+        "It contradicts itself within the same sentence",
+        "It relies on a comparison that doesn't actually relate to the claim"
+      ],
+      "correctIndex": 0,
+      "explanation": "A single anecdote isn't reliable evidence, especially when the outcome would likely have happened regardless of the remedy."
+    },
+    {
+      "prompt": "\"We shouldn't listen to any of the climate scientist's warnings — last year she predicted a storm that didn't happen.\" What's the flaw in this reasoning?",
+      "options": [
+        "It dismisses someone's overall expertise based on a single incorrect prediction",
+        "It assumes two unrelated events must be connected",
+        "It uses a definition that shifts partway through the argument",
+        "It appeals to tradition instead of evidence"
+      ],
+      "correctIndex": 0,
+      "explanation": "One wrong prediction doesn't invalidate someone's overall expertise or track record — this unfairly generalises from a single mistake."
+    }
+  ]
 }

@@ -4,11 +4,17 @@
   "type": "object",
   "required": ["literacy", "verbal", "critical"],
   "properties": {
-    "literacy": { "$ref": "#/$defs/question" },
-    "verbal": { "$ref": "#/$defs/question" },
-    "critical": { "$ref": "#/$defs/question" }
+    "literacy": { "$ref": "#/$defs/questionSet" },
+    "verbal": { "$ref": "#/$defs/questionSet" },
+    "critical": { "$ref": "#/$defs/questionSet" }
   },
   "$defs": {
+    "questionSet": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/question" }
+    },
     "question": {
       "type": "object",
       "required": ["prompt", "options", "correctIndex", "explanation"],

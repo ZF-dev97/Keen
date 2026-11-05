@@ -1,4 +1,4 @@
-import { generateNumeracy } from './numeracy.js';
+import { generateNumeracyDay } from './numeracy.js';
 
 const ICONS = {
   numeracy: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19V14M12 19V9M19 19V5"/></svg>',
@@ -9,11 +9,13 @@ const ICONS = {
 const CHECK_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13L9.5 17.5L19 7"/></svg>';
 const X_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6L18 18M18 6L6 18"/></svg>';
 
+const QUESTIONS_PER_CATEGORY = 5;
+
 const CATEGORIES = [
-  { key: 'numeracy', label: 'Numeracy', title: 'Number Sequences', desc: 'Spot the pattern and find what comes next.', time: '2 min', hue: 250 },
-  { key: 'literacy', label: 'Literacy', title: 'Word Roots', desc: 'Match words to their Latin and Greek origins.', time: '3 min', hue: 190 },
-  { key: 'verbal', label: 'Verbal Reasoning', title: 'Odd One Out', desc: "Find the word that doesn't belong.", time: '2 min', hue: 300 },
-  { key: 'critical', label: 'Critical Thinking', title: 'Spot the Flaw', desc: 'Find the gap in a short argument.', time: '3 min', hue: 40 }
+  { key: 'numeracy', label: 'Numeracy', title: 'Number Sequences', desc: 'Five harder equations — mixed operators, bigger numbers.', time: '4 min', hue: 250 },
+  { key: 'literacy', label: 'Literacy', title: 'Word Roots', desc: 'Five vocabulary and word-origin questions.', time: '4 min', hue: 190 },
+  { key: 'verbal', label: 'Verbal Reasoning', title: 'Odd One Out', desc: 'Five analogy and relationship questions.', time: '4 min', hue: 300 },
+  { key: 'critical', label: 'Critical Thinking', title: 'Spot the Flaw', desc: 'Five short arguments, each with a flaw to find.', time: '4 min', hue: 40 }
 ];
 
 // ---------- date & storage helpers ----------
@@ -79,13 +81,31 @@ function greeting() {
 
 // ---------- data loading ----------
 
+// Normalises a category's daily content to an array of questions. Older
+// daily-refresh files (from before exercises became 5-a-day) hold a
+// single question object rather than an array — wrap those so the app
+// still works instead of breaking on them.
+function asQuestionList(value) {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === 'object') return [value];
+  return [];
+}
+
 async function loadTodayData(dateStr) {
+  let raw = null;
   try {
     const res = await fetch(`exercises/${dateStr}.json`, { cache: 'no-store' });
-    if (res.ok) return await res.json();
+    if (res.ok) raw = await res.json();
   } catch { /* fall through to fallback */ }
-  const res = await fetch('exercises/fallback.json');
-  return await res.json();
+  if (!raw) {
+    const res = await fetch('exercises/fallback.json');
+    raw = await res.json();
+  }
+  return {
+    literacy: asQuestionList(raw.literacy),
+    verbal: asQuestionList(raw.verbal),
+    critical: asQuestionList(raw.critical)
+  };
 }
 
 // ---------- app state ----------
@@ -95,11 +115,11 @@ const state = {
   activeCategory: null,
   today: todayStr(),
   progress: {},
-  data: null // { literacy, verbal, critical } for today (or fallback)
+  data: null // { literacy, verbal, critical } for today (or fallback), each an array
 };
 
-function currentQuestion(categoryKey) {
-  if (categoryKey === 'numeracy') return generateNumeracy(state.today);
+function questionSetFor(categoryKey) {
+  if (categoryKey === 'numeracy') return generateNumeracyDay(state.today);
   return state.data[categoryKey];
 }
 
@@ -142,12 +162,13 @@ function renderNav(activeTab) {
 function renderHome() {
   const progress = state.progress;
   const completedCount = CATEGORIES.filter((c) => progress[c.key]).length;
-  const remainingMinutes = (4 - completedCount) * 2;
+  const remainingMinutes = (4 - completedCount) * 4;
   const circumference = 163.36;
   const ringOffset = circumference * (1 - completedCount / 4);
 
   const cards = CATEGORIES.map((c) => {
-    const done = !!progress[c.key];
+    const done = progress[c.key];
+    const doneLabel = done && typeof done === 'object' ? `Completed — ${done.correct}/${QUESTIONS_PER_CATEGORY}` : 'Completed';
     return `
       <div class="ex-card">
         <div class="row-top">
@@ -160,7 +181,7 @@ function renderHome() {
           <span class="ex-desc">${c.desc}</span>
         </div>
         ${done
-          ? `<div class="done-row">${CHECK_ICON.replace('currentColor', 'var(--success)')}<span class="label">Completed</span><button class="redo-link" data-redo="${c.key}">Redo</button></div>`
+          ? `<div class="done-row">${CHECK_ICON.replace('currentColor', 'var(--success)')}<span class="label">${doneLabel}</span><button class="redo-link" data-redo="${c.key}">Redo</button></div>`
           : `<button class="start-btn" data-start="${c.key}">Start exercise</button>`}
       </div>`;
   }).join('');
@@ -170,7 +191,7 @@ function renderHome() {
     <div class="home-main">
       <div class="hero">
         <h1>${greeting()}</h1>
-        <p>Today's set — four quick exercises, about 8 minutes total.</p>
+        <p>Today's set — four exercises, five questions each, about 16 minutes total.</p>
       </div>
       <div class="progress-card">
         <svg width="64" height="64" viewBox="0 0 64 64" style="flex-shrink:0;">
@@ -189,13 +210,25 @@ function renderHome() {
 
 function renderExercise() {
   const c = CATEGORIES.find((x) => x.key === state.activeCategory);
-  const q = state.exerciseQuestion;
+  const total = state.exerciseQuestions.length;
+  const q = state.exerciseQuestions[state.questionIndex];
+  const isLast = state.questionIndex === total - 1;
+
+  const dots = state.exerciseQuestions.map((_, i) => {
+    const filled = i <= state.questionIndex;
+    return `<span style="width:22px;height:4px;border-radius:2px;background:${filled ? 'oklch(0.5 0.15 ' + c.hue + ')' : 'var(--border)'};"></span>`;
+  }).join('');
+
+  const finished = state.revealed && isLast;
 
   return `
     <div class="exercise-top">
       <button class="exit-btn" data-exit="1">${X_ICON.replace(/currentColor/g, 'var(--text-muted)').replace('width="18" height="18"', 'width="15" height="15"')}</button>
-      <span class="exercise-cat" style="color:oklch(0.5 0.15 ${c.hue});">${c.label}</span>
-      <span class="exercise-spacer"></span>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <span class="exercise-cat" style="color:oklch(0.5 0.15 ${c.hue});">${c.label}</span>
+        <div style="display:flex;gap:6px;">${dots}</div>
+      </div>
+      <span style="font-size:13px;font-weight:600;color:var(--text-muted);min-width:78px;text-align:right;">Question ${state.questionIndex + 1}/${total}</span>
     </div>
     <div class="exercise-main">
       <div class="exercise-panel">
@@ -218,7 +251,8 @@ function renderExercise() {
         ${state.revealed ? `
           <div class="feedback">
             <p>${q.explanation}</p>
-            <button class="continue-btn" data-continue="1">Back to today</button>
+            ${finished ? `<p style="font-weight:700;color:var(--text);margin:0;">You got ${state.correctCount} of ${total} correct</p>` : ''}
+            <button class="continue-btn" data-continue="1">${finished ? 'Back to today' : 'Next question'}</button>
           </div>` : ''}
       </div>
     </div>`;
@@ -228,7 +262,9 @@ function renderExercise() {
 
 function startExercise(categoryKey) {
   state.activeCategory = categoryKey;
-  state.exerciseQuestion = currentQuestion(categoryKey);
+  state.exerciseQuestions = questionSetFor(categoryKey);
+  state.questionIndex = 0;
+  state.correctCount = 0;
   state.selected = null;
   state.revealed = false;
   state.view = 'exercise';
@@ -239,11 +275,21 @@ function selectOption(i) {
   if (state.revealed) return;
   state.selected = i;
   state.revealed = true;
+  const q = state.exerciseQuestions[state.questionIndex];
+  if (i === q.correctIndex) state.correctCount++;
   render();
 }
 
-function finishExercise() {
-  state.progress[state.activeCategory] = true;
+function continueExercise() {
+  const isLast = state.questionIndex === state.exerciseQuestions.length - 1;
+  if (!isLast) {
+    state.questionIndex++;
+    state.selected = null;
+    state.revealed = false;
+    render();
+    return;
+  }
+  state.progress[state.activeCategory] = { correct: state.correctCount };
   setProgress(state.today, state.progress);
   updateStreakIfComplete(state.today, state.progress);
   state.view = 'home';
@@ -266,7 +312,7 @@ function wireEvents() {
   const exit = root.querySelector('[data-exit]');
   if (exit) exit.addEventListener('click', () => { state.view = 'home'; render(); });
   const cont = root.querySelector('[data-continue]');
-  if (cont) cont.addEventListener('click', finishExercise);
+  if (cont) cont.addEventListener('click', continueExercise);
 }
 
 // ---------- boot ----------
