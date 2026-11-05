@@ -1,0 +1,25 @@
+{
+  "literacy": {
+    "prompt": "The word 'telephone' combines the Greek roots 'tele-' and 'phone'. What does 'tele-' mean?",
+    "options": ["Far", "Sound", "Light", "Fast"],
+    "correctIndex": 0,
+    "explanation": "'Tele-' is Greek for 'far' or 'distant' — a telephone carries sound ('phone') across a distance."
+  },
+  "verbal": {
+    "prompt": "Which word does not belong with the others?",
+    "options": ["Oak", "Maple", "Birch", "Granite"],
+    "correctIndex": 3,
+    "explanation": "'Granite' is a type of rock — the other three are all types of tree."
+  },
+  "critical": {
+    "prompt": "\"Thousands of people buy this supplement every month, so it must actually work.\" What's the flaw in this reasoning?",
+    "options": [
+      "It assumes something is true just because it's popular",
+      "It uses a statistic without stating its source",
+      "It attacks the people who disagree instead of the claim",
+      "It assumes correlation means causation"
+    ],
+    "correctIndex": 0,
+    "explanation": "Popularity isn't evidence something works — plenty of people can buy (or believe in) something that doesn't actually do anything. This is sometimes called the 'appeal to popularity' fallacy."
+  }
+}

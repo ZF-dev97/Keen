@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "date": "2026-09-20",
+    "literacy": "The word 'chronology' comes from the Greek roots 'chronos' and '-logy'. What does 'chronos' mean?",
+    "verbal": "Which word does not belong with the others? (Whisper, Shout, Mumble, Glisten)",
+    "critical": "Ever since the new manager started, sales have gone up... (correlation vs causation)"
+  },
+  {
+    "date": "2026-11-05",
+    "literacy": "The word 'telephone' combines the Greek roots 'tele-' and 'phone'. What does 'tele-' mean?",
+    "verbal": "Which word does not belong with the others? (Oak, Maple, Birch, Granite)",
+    "critical": "Thousands of people buy this supplement every month... (appeal to popularity)"
+  }
+]
