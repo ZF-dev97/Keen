@@ -1,0 +1,123 @@
+{
+  "literacy": [
+    {
+      "prompt": "Which word is closest in meaning to 'sanguine'?",
+      "options": ["Bloodthirsty", "Optimistic", "Gloomy", "Cautious"],
+      "correctIndex": 1,
+      "explanation": "'Sanguine' means confidently optimistic, especially in a difficult situation. It comes from the Latin for 'blood', once thought to cause a cheerful temperament, which is why 'bloodthirsty' is a tempting trap."
+    },
+    {
+      "prompt": "'Philanthropist' comes from the Greek 'philos' (loving) and 'anthropos' (human). Using the same root, what is a 'misanthrope'?",
+      "options": ["Someone who distrusts or dislikes people in general", "Someone who studies human societies", "Someone who gives money away anonymously", "Someone who has lost faith in religion"],
+      "correctIndex": 0,
+      "explanation": "'Mis-' (from Greek 'misein', to hate) plus 'anthropos' (human) gives someone who dislikes humankind, the opposite of a philanthropist."
+    },
+    {
+      "prompt": "In careful usage, what does it mean to call a referee 'disinterested'?",
+      "options": ["They are bored by the match", "They are impartial, with nothing to gain from the result", "They are unqualified for the role", "They have stopped paying attention"],
+      "correctIndex": 1,
+      "explanation": "'Disinterested' traditionally means impartial or unbiased. 'Uninterested' is the word for bored, and mixing the two up is a classic usage error."
+    },
+    {
+      "prompt": "Which sentence uses 'comprise' in the traditionally correct way?",
+      "options": ["The committee is comprised of nine members", "Nine members comprise of the committee", "The committee comprises nine members", "The committee comprises of nine members"],
+      "correctIndex": 2,
+      "explanation": "The whole comprises its parts, with no 'of'. 'Is comprised of' is common but traditionally frowned upon; 'is composed of' or 'consists of' are the safe alternatives."
+    },
+    {
+      "prompt": "Which word best describes someone who is excessively eager to please or obey?",
+      "options": ["Obstinate", "Obsequious", "Obtuse", "Oblique"],
+      "correctIndex": 1,
+      "explanation": "'Obsequious' means fawning or overly deferential. The distractors share the 'ob-' start but mean stubborn, slow to understand, and indirect."
+    }
+  ],
+  "verbal": [
+    {
+      "prompt": "ARCHIPELAGO is to ISLAND as CONSTELLATION is to:",
+      "options": ["Galaxy", "Sky", "Star", "Planet"],
+      "correctIndex": 2,
+      "explanation": "An archipelago is a group of islands, and a constellation is a group (or pattern) of stars."
+    },
+    {
+      "prompt": "Which word does not belong with the others?",
+      "options": ["Rhombus", "Trapezium", "Pentagon", "Kite"],
+      "correctIndex": 2,
+      "explanation": "A rhombus, trapezium and kite all have four sides. A pentagon has five."
+    },
+    {
+      "prompt": "EMBARGO is to TRADE as QUARANTINE is to:",
+      "options": ["Disease", "Contact", "Hospital", "Medicine"],
+      "correctIndex": 1,
+      "explanation": "An embargo restricts trade, and a quarantine restricts contact. 'Disease' is what quarantine guards against, not what it restricts."
+    },
+    {
+      "prompt": "Which word does not belong with the others?",
+      "options": ["Saturnine", "Jovial", "Mercurial", "Venomous"],
+      "correctIndex": 3,
+      "explanation": "Saturnine (Saturn), jovial (Jove/Jupiter) and mercurial (Mercury) all come from Roman gods and planets. 'Venomous' has nothing to do with Venus; it comes from the Latin for poison."
+    },
+    {
+      "prompt": "PRODIGAL is to THRIFT as RECKLESS is to:",
+      "options": ["Danger", "Speed", "Caution", "Courage"],
+      "correctIndex": 2,
+      "explanation": "Someone prodigal lacks thrift (they spend wastefully), and someone reckless lacks caution."
+    }
+  ],
+  "critical": [
+    {
+      "prompt": "\"My colleague suggested we review our hiring process. So apparently she thinks everyone we've ever hired is incompetent.\" What's the flaw in this reasoning?",
+      "options": [
+        "It attacks the colleague's character instead of her suggestion",
+        "It distorts her suggestion into an extreme version that's easier to reject",
+        "It assumes that because something is popular, it must be right",
+        "It presents only two options when others exist"
+      ],
+      "correctIndex": 1,
+      "explanation": "This is a straw man: suggesting a review is not the same as calling every hire incompetent. Rebutting the exaggerated version avoids engaging with what she actually said."
+    },
+    {
+      "prompt": "\"This guidebook is completely reliable, because everything in it is accurate. And I know it's accurate because the guidebook says so.\" What's the flaw?",
+      "options": [
+        "It relies on a single personal experience",
+        "It assumes the conclusion it is trying to prove",
+        "It appeals to an authority outside their area of expertise",
+        "It confuses correlation with causation"
+      ],
+      "correctIndex": 1,
+      "explanation": "This is circular reasoning: the book's reliability is used as evidence for its accuracy, and its accuracy as evidence for its reliability. Nothing independent supports either claim."
+    },
+    {
+      "prompt": "\"We've already spent £40,000 building this feature, so we can't abandon it now, even though user testing shows almost nobody wants it.\" What's the flaw?",
+      "options": [
+        "It lets money that's already gone drive a decision that should depend on future value",
+        "It assumes a small step will inevitably lead to disaster",
+        "It treats a small sample as representative of all users",
+        "It attacks the testers rather than their findings"
+      ],
+      "correctIndex": 0,
+      "explanation": "This is the sunk cost fallacy. The £40,000 is spent whichever way they decide, so the only question that matters is whether further investment is worth it, and the testing says it isn't."
+    },
+    {
+      "prompt": "\"Every player in this squad is an all-star in their position, so the squad must be the best team in the league.\" What's the flaw?",
+      "options": [
+        "It assumes what is true of each part must be true of the whole",
+        "It dismisses the opposing teams based on their reputation",
+        "It assumes past performance guarantees future results",
+        "It relies on an unnamed source"
+      ],
+      "correctIndex": 0,
+      "explanation": "This is the fallacy of composition. A team's strength also depends on how players combine, such as tactics, chemistry and balance, so brilliant individuals don't guarantee the best team."
+    },
+    {
+      "prompt": "Some managers are engineers. All engineers are analytical. Which statement must be true?",
+      "options": [
+        "All managers are analytical",
+        "Some managers are analytical",
+        "Some analytical people are not managers",
+        "No analytical people are managers"
+      ],
+      "correctIndex": 1,
+      "explanation": "The managers who are engineers must be analytical, so at least some managers are. Nothing tells us about the other managers, and nothing guarantees there are analytical people outside management."
+    }
+  ]
+}
